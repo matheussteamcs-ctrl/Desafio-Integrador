@@ -18,9 +18,9 @@ public enum StatusPedido{
 package model;
 
 public class Cliente{
-    private int id;
-    private String nome;
-    private String email;
+    private final int id;
+    private final String nome;
+    private final String email;
 
     public Cliente(int id, String nome, String email){
         this.id = id;
@@ -42,13 +42,14 @@ public class Cliente{
 }
 
 package model;
+import enums.Categoria; 
 
 public class Produto{
-    private int id;
-    private String nome;
-    private double preco;
-    private int estoque;
-    private Categoria categoria;
+    private final int id;
+    private final String nome;
+    private final double preco;
+    private final int estoque;
+    private final Categoria categoria;
 
     public Produto(int id, String nome, double preco, int estoque, Categoria categoria){
         this.id = id;
