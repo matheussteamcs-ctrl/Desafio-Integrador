@@ -1,4 +1,4 @@
-package exception;
+package src.exception;
  
 public class PedidoNotFoundException extends RuntimeException {
  

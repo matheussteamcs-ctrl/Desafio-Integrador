@@ -1,8 +1,9 @@
-package model;
+package src.model;
  
-import enums.StatusPedido;
 import java.time.LocalDateTime;
 import java.util.List;
+
+import src.enums.StatusPedido;
  
 public class Pedido {
  
