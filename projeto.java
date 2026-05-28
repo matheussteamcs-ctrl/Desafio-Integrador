@@ -1,15 +1,21 @@
+package enums;
+
 public enum Categoria{
-    Alimentos,
-    Eletronicos,
-    Livros
+    ALIMENTOS,
+    ELETRONICOS,
+    LIVROS
 }
 
+package enums;
+
 public enum StatusPedido{
-    Aberto,
-    Fila,
-    Processando,
-    Finalizado
+    ABERTO,
+    FILA,
+    PROCESSANDO,
+    FINALIZADO
 }
+
+package model;
 
 public class Cliente{
     private int id;
@@ -34,6 +40,8 @@ public class Cliente{
         return email;
     }
 }
+
+package model;
 
 public class Produto{
     private int id;
