@@ -54,7 +54,7 @@ public class ClienteMenu {
         System.out.print("E-mail: ");
         String email = scanner.nextLine().trim();
 
-        // id 0 pois o banco gera o ID automaticamente (AUTO_INCREMENT)
+        
         Cliente cliente = new Cliente(0, nome, email);
 
         try {

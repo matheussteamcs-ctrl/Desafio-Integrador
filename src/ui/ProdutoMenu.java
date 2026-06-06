@@ -73,7 +73,7 @@ public class ProdutoMenu {
         Categoria categoria = selecionarCategoria();
         if (categoria == null) return;
 
-        // id 0 pois o banco gera o ID automaticamente (AUTO_INCREMENT)
+        
         Produto produto = new Produto(0, nome, preco, estoque, categoria);
 
         try {
