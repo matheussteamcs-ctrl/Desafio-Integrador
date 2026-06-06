@@ -15,6 +15,8 @@ Desafio Integrador 2026
 
 ---
 
+---
+
 ## 📁 Estrutura do Projeto
 
 ```
@@ -68,6 +70,70 @@ Desafio-Integrador/
 - MySQL 8.0 ou superior
 - Git
 
+---
+
+## 🛠️ Tecnologias Utilizadas
+
+- Java 17
+- JDBC
+- MySQL 8
+- Git
+- GitHub
+- VS Code
+
+---
+
+## ▶️ Como Executar
+
+1. Criar o banco executando o arquivo schema.sql
+2. Configurar usuário e senha no ConnectionFactory.java
+3. Abrir o projeto no VS Code
+4. Executar MainMenu.java
+5. Utilizar os menus para cadastrar clientes, produtos e pedidos
+
+---
+
+## ✅ Funcionalidades
+
+### Clientes
+- Cadastrar cliente
+- Listar clientes
+- Buscar cliente por ID
+- Excluir cliente
+
+### Produtos
+- Cadastrar produto
+- Listar produtos
+- Buscar produto por ID
+- Excluir produto
+
+### Pedidos
+- Criar pedido
+- Adicionar itens ao pedido
+- Confirmar pedido
+- Processamento automático por thread
+
+### Relatórios
+- Total de pedidos por cliente
+- Produtos mais vendidos
+
+---
+
+## 🗄️ Estrutura do Banco
+
+### cliente
+Armazena os clientes cadastrados.
+
+### produto
+Armazena os produtos disponíveis para venda.
+
+### pedido
+Armazena os pedidos realizados pelos clientes.
+
+### item_pedido
+Armazena os itens pertencentes a cada pedido.
+
+---
 
 ## 🏗️ Decisões Arquiteturais
 
