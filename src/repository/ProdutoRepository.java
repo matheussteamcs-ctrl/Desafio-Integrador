@@ -1,6 +1,6 @@
-package src.repository;
+package repository;
 
-import src.model.Produto;
+import model.Produto;
 import java.util.ArrayList;
 import java.util.List;
 

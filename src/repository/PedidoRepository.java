@@ -1,10 +1,10 @@
-package src.repository;
+package repository;
 
-import src.exception.EstoqueInsuficienteException;
-import src.model.ItemPedido;
-import src.model.Pedido;
-import src.enums.StatusPedido;
-import src.util.ConnectionFactory;
+import exception.EstoqueInsuficienteException;
+import model.ItemPedido;
+import model.Pedido;
+import enums.StatusPedido;
+import util.ConnectionFactory;
 
 import java.sql.*;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package src.exception;
+package exception;
  
 public class EstoqueInsuficienteException extends RuntimeException {
  

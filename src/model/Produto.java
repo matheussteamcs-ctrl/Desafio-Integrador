@@ -1,6 +1,6 @@
 
-package src.model;
-import src.enums.Categoria; 
+package model;
+import enums.Categoria; 
 
 public class Produto{
     private final int id;

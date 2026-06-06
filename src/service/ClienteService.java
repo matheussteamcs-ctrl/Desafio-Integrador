@@ -1,8 +1,8 @@
-package src.service;
+package service;
 
-import src.exception.ValidacaoException;
-import src.model.Cliente;
-import src.repository.ClienteRepository;
+import exception.ValidacaoException;
+import model.Cliente;
+import repository.ClienteRepository;
 
 import java.util.List;
 
