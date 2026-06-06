@@ -33,20 +33,20 @@ public class OrderProcessorThread implements Runnable {
 
         try (Connection conn = ConnectionFactory.getConnection()) {
 
-            String sqlBusca = "SELECT id FROM pedido WHERE status = 'FILA' LIMIT 1";
+            String sqlBusca = "SELECT id_pedido FROM pedido WHERE status = 'FILA' LIMIT 1";
             int pedidoId = -1;
 
             try (PreparedStatement stmt = conn.prepareStatement(sqlBusca);
                  ResultSet rs = stmt.executeQuery()) {
 
                 if (rs.next()) {
-                    pedidoId = rs.getInt("id");
+                    pedidoId = rs.getInt("id_pedido");
                 }
             }
 
             if (pedidoId == -1) return; 
 
-            String sqlUpdate = "UPDATE pedido SET status = 'PROCESSANDO' WHERE id = ? AND status = 'FILA'";
+            String sqlUpdate = "UPDATE pedido SET status = 'PROCESSANDO' WHERE id_pedido = ? AND status = 'FILA'";
             int linhasAfetadas;
 
             try (PreparedStatement stmt = conn.prepareStatement(sqlUpdate)) {
@@ -59,17 +59,17 @@ public class OrderProcessorThread implements Runnable {
                 return;
             }
 
-            System.out.println("[OrderProcessor] Processando pedido " + pedidoId + "...");
+            // System.out.println("[OrderProcessor] Processando pedido " + pedidoId + "...");
 
             Thread.sleep(TEMPO_PROCESSAMENTO_MS);
 
-            String sqlFinalizar = "UPDATE pedido SET status = 'FINALIZADO' WHERE id = ?";
+            String sqlFinalizar = "UPDATE pedido SET status = 'FINALIZADO' WHERE id_pedido = ?";
             try (PreparedStatement stmt = conn.prepareStatement(sqlFinalizar)) {
                 stmt.setInt(1, pedidoId);
                 stmt.executeUpdate();
             }
 
-            System.out.println("[OrderProcessor] Pedido " + pedidoId + " FINALIZADO.");
+            // System.out.println("[OrderProcessor] Pedido " + pedidoId + " FINALIZADO.");
 
         } catch (SQLException e) {
             System.out.println("[OrderProcessor] Erro ao processar pedido: " + e.getMessage());

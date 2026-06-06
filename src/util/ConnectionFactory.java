@@ -7,9 +7,9 @@ import java.sql.SQLException;
 public class ConnectionFactory {
 
     private static final String URL =
-            "jdbc:mysql://localhost:3306/sistema_pedidos";
+            "jdbc:mysql://localhost:3306/desafio_integrador";
 
-    private static final String USER = "";
+    private static final String USER = "root";
 
     private static final String PASSWORD = "";
 

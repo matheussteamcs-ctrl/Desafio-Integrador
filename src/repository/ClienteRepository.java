@@ -74,6 +74,7 @@ public List<Cliente> findAll() {
     return clientes;
 }
 
+
 public void delete(int id) {
     String sql = "DELETE FROM cliente WHERE id_cliente = ?";
 
@@ -84,7 +85,16 @@ public void delete(int id) {
         ps.executeUpdate();
 
     } catch (SQLException e) {
-        throw new RuntimeException("Erro ao deletar cliente: " + e.getMessage());
+
+        if (e.getMessage().contains("foreign key constraint")) {
+            throw new RuntimeException(
+                "Nao e possivel excluir um cliente que possui pedidos cadastrados."
+            );
+        }
+
+        throw new RuntimeException(
+            "Erro ao deletar cliente: " + e.getMessage()
+        );
     }
 }
 
