@@ -14,14 +14,14 @@ public class RelatorioRepository {
     public List<String[]> relatorioPedidosPorCliente() {
         String sql =
             "SELECT c.nome AS cliente, " +
-            "       COUNT(p.id) AS total_pedidos, " +
+            "       COUNT(p.id_pedido) AS total_pedidos, " +
             "       SUM(ip.quantidade * ip.preco_unitario) AS valor_total, " +
             "       AVG(ip.quantidade * ip.preco_unitario) AS ticket_medio " +
             "FROM cliente c " +
-            "JOIN pedido p ON p.cliente_id = c.id " +
-            "JOIN item_pedido ip ON ip.pedido_id = p.id " +
+            "JOIN pedido p ON p.id_cliente = c.id_cliente " +
+            "JOIN item_pedido ip ON ip.id_pedido = p.id_pedido " +
             "WHERE p.status = 'FINALIZADO' " +
-            "GROUP BY c.id, c.nome " +
+            "GROUP BY c.id_cliente, c.nome " +
             "ORDER BY valor_total DESC";
 
         List<String[]> resultado = new ArrayList<>();
@@ -53,8 +53,8 @@ public class RelatorioRepository {
             "       pr.categoria AS categoria, " +
             "       SUM(ip.quantidade) AS quantidade_vendida " +
             "FROM item_pedido ip " +
-            "JOIN produto pr ON pr.id = ip.produto_id " +
-            "GROUP BY pr.id, pr.nome, pr.categoria " +
+            "JOIN produto pr ON pr.id_produto = ip.id_produto " +
+            "GROUP BY pr.id_produto, pr.nome, pr.categoria " +
             "ORDER BY quantidade_vendida DESC";
 
         List<String[]> resultado = new ArrayList<>();

@@ -13,9 +13,9 @@ import java.util.List;
 public class PedidoRepository {
 
     public void salvar(Pedido pedido) {
-        String sqlPedido  = "INSERT INTO pedido (cliente_id, status, data_criacao) VALUES (?, ?, ?)";
-        String sqlItem    = "INSERT INTO item_pedido (pedido_id, produto_id, nome_produto, quantidade, preco_unitario) VALUES (?, ?, ?, ?, ?)";
-        String sqlEstoque = "UPDATE produto SET estoque = estoque - ? WHERE id = ? AND estoque >= ?";
+        String sqlPedido  = "INSERT INTO pedido (id_cliente, status, data_criacao) VALUES (?, ?, ?)";
+        String sqlItem    = "INSERT INTO item_pedido (id_pedido, id_produto, quantidade, preco_unitario) VALUES (?, ?, ?, ?)";
+        String sqlEstoque = "UPDATE produto SET estoque = estoque - ? WHERE id_produto = ? AND estoque >= ?";
 
         Connection conn = null;
         try {
@@ -40,10 +40,8 @@ public class PedidoRepository {
                 try (PreparedStatement ps = conn.prepareStatement(sqlItem)) {
                     ps.setInt(1, pedidoId);
                     ps.setInt(2, item.getProdutoId());
-                    ps.setString(3, item.getNomeProduto());
-                    ps.setInt(4, item.getQuantidade());
-                    ps.setDouble(5, item.getPrecoUnitario());
-                    ps.executeUpdate();
+                    ps.setInt(3, item.getQuantidade());
+                    ps.setDouble(4, item.getPrecoUnitario());
                 }
 
                 try (PreparedStatement ps = conn.prepareStatement(sqlEstoque)) {
@@ -83,13 +81,13 @@ public class PedidoRepository {
     
     public List<Pedido> findAll() {
         String sql =
-            "SELECT p.id, p.cliente_id, p.status, p.data_criacao, " +
-            "       ip.id AS item_id, ip.produto_id, ip.nome_produto, " +
+            "SELECT p.id_pedido, p.id_cliente, p.status, p.data_criacao, " +
+            "       ip.id AS id_item, ip.id_produto, ip.nome_produto, " +
             "       ip.quantidade, ip.preco_unitario " +
             "FROM pedido p " +
-            "LEFT JOIN item_pedido ip ON ip.pedido_id = p.id " +
-            "LEFT JOIN produto pr ON pr.id = ip.produto_id " +
-            "ORDER BY p.id";
+            "LEFT JOIN item_pedido ip ON ip.id_pedido = p.id_cliente " +
+            "LEFT JOIN produto pr ON pr.id_cliente = ip.produto_id_cliente" +
+            "ORDER BY p.id_cliente";
 
         List<Pedido> pedidos = new ArrayList<>();
 

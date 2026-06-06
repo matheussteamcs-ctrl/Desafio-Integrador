@@ -4,7 +4,6 @@ import exception.ValidacaoException;
 import model.Produto;
 import repository.ProdutoRepository;
 import java.util.List;
-import java.util.List;
 
 public class ProdutoService {
 
