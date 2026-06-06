@@ -1,7 +1,7 @@
-package repository;
+package src.repository;
 
-import model.Cliente;
-import util.ConnectionFactory;
+import src.model.Cliente;
+import src.util.ConnectionFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

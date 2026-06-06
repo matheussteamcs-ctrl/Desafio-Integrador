@@ -1,4 +1,4 @@
-package repository;
+package src.repository;
 
 import util.ConnectionFactory;
 
