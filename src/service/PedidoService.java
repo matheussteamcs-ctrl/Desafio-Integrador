@@ -1,14 +1,14 @@
-package src.service;
+package service;
 
-import src.enums.StatusPedido;
-import src.exception.EstoqueInsuficienteException;
-import src.exception.PedidoNotFoundException;
-import src.exception.ValidacaoException;
-import src.model.ItemPedido;
-import src.model.Pedido;
-import src.model.Produto;
-import src.repository.PedidoRepository;
-import src.repository.ProdutoRepository;
+import enums.StatusPedido;
+import exception.EstoqueInsuficienteException;
+import exception.PedidoNotFoundException;
+import exception.ValidacaoException;
+import model.ItemPedido;
+import model.Pedido;
+import model.Produto;
+import repository.PedidoRepository;
+import repository.ProdutoRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;

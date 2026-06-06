@@ -14,26 +14,24 @@ public class MainMenu {
 
     public static void main(String[] args) {
 
-        // --- Inicia a thread de processamento em background (Semana 3) ---
         OrderProcessorThread processador = new OrderProcessorThread();
         Thread threadProcessador = new Thread(processador);
-        threadProcessador.setDaemon(true); // daemon: encerra junto com a JVM
+        threadProcessador.setDaemon(true); 
         threadProcessador.setName("OrderProcessorThread");
         threadProcessador.start();
         System.out.println("[Sistema] Thread de processamento iniciada em background.");
 
-        // --- Instancia repositorios, services e menus ---
         Scanner scanner = new Scanner(System.in);
 
         ClienteService clienteService = new ClienteService(new ClienteRepository());
         ProdutoService produtoService = new ProdutoService(new ProdutoRepository());
-        PedidoService pedidoService   = new PedidoService(new PedidoRepository());
+        PedidoService pedidoService   = new PedidoService(new PedidoRepository(), new ProdutoRepository());
 
         ClienteMenu clienteMenu = new ClienteMenu(clienteService, scanner);
         ProdutoMenu produtoMenu = new ProdutoMenu(produtoService, scanner);
         PedidoMenu  pedidoMenu  = new PedidoMenu(pedidoService, produtoService, scanner);
 
-        // --- Loop principal --- roda enquanto a thread daemon trabalha em background
+        
         int opcao = -1;
         while (opcao != 0) {
             System.out.println("\n=============================");
