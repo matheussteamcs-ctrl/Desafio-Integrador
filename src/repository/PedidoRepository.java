@@ -42,6 +42,7 @@ public class PedidoRepository {
                     ps.setInt(2, item.getProdutoId());
                     ps.setInt(3, item.getQuantidade());
                     ps.setDouble(4, item.getPrecoUnitario());
+                    ps.executeUpdate();
                 }
 
                 try (PreparedStatement ps = conn.prepareStatement(sqlEstoque)) {
@@ -82,12 +83,12 @@ public class PedidoRepository {
     public List<Pedido> findAll() {
         String sql =
             "SELECT p.id_pedido, p.id_cliente, p.status, p.data_criacao, " +
-            "       ip.id AS id_item, ip.id_produto, ip.nome_produto, " +
+            "       ip.id_item, ip.id_produto, pr.nome AS nome_produto, " +
             "       ip.quantidade, ip.preco_unitario " +
             "FROM pedido p " +
-            "LEFT JOIN item_pedido ip ON ip.id_pedido = p.id_cliente " +
-            "LEFT JOIN produto pr ON pr.id_cliente = ip.produto_id_cliente" +
-            "ORDER BY p.id_cliente";
+            "LEFT JOIN item_pedido ip ON ip.id_pedido = p.id_pedido " +
+            "LEFT JOIN produto pr ON pr.id_produto = ip.id_produto " +
+            "ORDER BY p.id_pedido";
 
         List<Pedido> pedidos = new ArrayList<>();
 
@@ -98,14 +99,14 @@ public class PedidoRepository {
             Pedido pedidoAtual = null;
 
             while (rs.next()) {
-                int pedidoId = rs.getInt("id");
+                int pedidoId = rs.getInt("id_pedido");
 
                 
                 if (pedidoAtual == null || pedidoAtual.getId() != pedidoId) {
                     List<ItemPedido> itens = new ArrayList<>();
                     pedidoAtual = new Pedido(
                         pedidoId,
-                        rs.getInt("cliente_id"),
+                        rs.getInt("id_cliente"),
                         StatusPedido.valueOf(rs.getString("status")),
                         rs.getTimestamp("data_criacao").toLocalDateTime(),
                         itens
@@ -114,11 +115,11 @@ public class PedidoRepository {
                 }
 
                 
-                if (rs.getInt("item_id") != 0) {
+                if (rs.getInt("id_item") != 0) {
                     pedidoAtual.getItens().add(new ItemPedido(
-                        rs.getInt("item_id"),
-                        pedidoId,
-                        rs.getInt("produto_id"),
+                        rs.getInt("id_item"),
+                        rs.getInt("id_pedido"),
+                        rs.getInt("id_produto"),
                         rs.getString("nome_produto"),
                         rs.getInt("quantidade"),
                         rs.getDouble("preco_unitario")
@@ -135,14 +136,14 @@ public class PedidoRepository {
 
     public Pedido findById(int id) {
         String sql =
-            "SELECT p.id, p.cliente_id, p.status, p.data_criacao, " +
-            "       ip.id AS item_id, ip.produto_id, ip.nome_produto, " +
+            "SELECT p.id_pedido, p.id_cliente, p.status, p.data_criacao, " +
+            "       ip.id_item, ip.id_produto, pr.nome AS nome_produto, " +
             "       ip.quantidade, ip.preco_unitario " +
             "FROM pedido p " +
-            "LEFT JOIN item_pedido ip ON ip.pedido_id = p.id " +
-            "LEFT JOIN produto pr ON pr.id = ip.produto_id " +
-            "WHERE p.id = ? " +
-            "ORDER BY p.id";
+            "LEFT JOIN item_pedido ip ON ip.id_pedido = p.id_pedido " +
+            "LEFT JOIN produto pr ON pr.id_produto = ip.id_produto " +
+            "WHERE p.id_pedido = ? " +
+            "ORDER BY p.id_pedido";
 
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -156,19 +157,19 @@ public class PedidoRepository {
                     if (pedido == null) {
                         List<ItemPedido> itens = new ArrayList<>();
                         pedido = new Pedido(
-                            rs.getInt("id"),
-                            rs.getInt("cliente_id"),
+                            rs.getInt("id_pedido"),
+                            rs.getInt("id_cliente"),
                             StatusPedido.valueOf(rs.getString("status")),
                             rs.getTimestamp("data_criacao").toLocalDateTime(),
                             itens
                         );
                     }
 
-                    if (rs.getInt("item_id") != 0) {
+                    if (rs.getInt("id_item") != 0) {
                         pedido.getItens().add(new ItemPedido(
-                            rs.getInt("item_id"),
-                            rs.getInt("id"),
-                            rs.getInt("produto_id"),
+                            rs.getInt("id_item"),
+                            rs.getInt("id_pedido"),
+                            rs.getInt("id_produto"),
                             rs.getString("nome_produto"),
                             rs.getInt("quantidade"),
                             rs.getDouble("preco_unitario")
